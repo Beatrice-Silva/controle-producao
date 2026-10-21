@@ -3,6 +3,7 @@ const resumo = document.querySelector("#resumo")
 const botaoTv = document.querySelector("#modo-tv")
 let aguardando = 0, concluido = 0, producao = 0
 
+
 let ordens = [
     { numero: 101, produto: "Eixo de transmissão", quantidade: 200, maquina: "Torno CNC",
         status : "aguardando" },
@@ -16,7 +17,10 @@ let ordens = [
 
 const NOMES = { aguardando: "Aguardando", producao: "Em produção", concluido: "Concluída"}
 
-    bota
+    botao.addEventListener("click", ()=>{
+        document.body.className("filtro")
+
+    })
 
 
     function criarOP(op){
@@ -44,6 +48,8 @@ const NOMES = { aguardando: "Aguardando", producao: "Em produção", concluido: 
 
        })
     }
+
+
        
     botaoTv.addEventListener("click", () => {
     const body = document.querySelector("body")
