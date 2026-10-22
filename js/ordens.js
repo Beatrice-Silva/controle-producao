@@ -1,7 +1,11 @@
 const ops = document.querySelectorAll(".op")
+
 const resumo = document.querySelector("#resumo")
 const botaoTv = document.querySelector("#modo-tv")
+
 let filtro = "todas"
+const botoesFiltro = document.querySelectorAll(".filtro")
+
 
 let ordens = [
     { numero: 101, produto: "Eixo de transmissão", quantidade: 200, maquina: "Torno CNC",
@@ -15,9 +19,6 @@ let ordens = [
 ]
 
 const NOMES = { aguardando: "Aguardando", producao: "Em produção", concluido: "Concluída"}
-
-    
-    const botoesFiltro = document.querySelectorAll(".filtro")
 
     const paraMostrar = filtro === "todas" ? ordens : 
     ordens.filter(op => op.status === filtro)
@@ -41,11 +42,17 @@ const NOMES = { aguardando: "Aguardando", producao: "Em produção", concluido: 
         return item
     }
 
+
+
     function desenhar(){
 
        lista.textContent = ""
 
        let aguardando = 0, concluido = 0, producao = 0
+
+       const ordens = filtro === "todas" ? ordens : 
+       ordens.filter((op) => op.status === filtro)
+    
 
        ordens.forEach((op) =>{
 
@@ -63,16 +70,25 @@ const NOMES = { aguardando: "Aguardando", producao: "Em produção", concluido: 
        resumo.textContent = `Aguardando: ${aguardando} | Em produção: ${producao} | Concluídas: ${concluido}`   
     }
 
+    botoesFiltro.forEach((botao) => botao.classList.remove("selecionado"))
 
-       
+    botoesFiltro.addEventListener("click", () => {
+    
+    botaoTv.event.target.dataset.filtro = "filtro"    
+    botoesFiltro.forEach((botao) => botao.classList.add("selecionado"))
+    desenhar()
+    })
+
     botaoTv.addEventListener("click", () => {
+
     const body = document.querySelector("body")
     body.classList.toggle("modo-tv")
-    botaoTv.textContent = body.classList.contains("modo-tv") ? "Sair do modo TV" : "Modo Tv"
+    botaoTv.textContent = body.classList.contains("modo-tv") ?
+     "Sair do modo TV" : "Modo Tv"
 
-})
+    })
 
-desenhar()
+    desenhar()
 
 
 
