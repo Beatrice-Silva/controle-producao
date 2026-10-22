@@ -1,8 +1,7 @@
 const ops = document.querySelectorAll(".op")
 const resumo = document.querySelector("#resumo")
 const botaoTv = document.querySelector("#modo-tv")
-let aguardando = 0, concluido = 0, producao = 0
-
+let filtro = "todas"
 
 let ordens = [
     { numero: 101, produto: "Eixo de transmissão", quantidade: 200, maquina: "Torno CNC",
@@ -17,21 +16,28 @@ let ordens = [
 
 const NOMES = { aguardando: "Aguardando", producao: "Em produção", concluido: "Concluída"}
 
-    botao.addEventListener("click", ()=>{
-        document.body.className("filtro")
+    
+    const botoesFiltro = document.querySelectorAll(".filtro")
 
-    })
-
+    const paraMostrar = filtro === "todas" ? ordens : 
+    ordens.filter(op => op.status === filtro)
 
     function criarOP(op){
+
         const item = document.createElement("li")
         item.classList.add("op", "status-" + op.status)
-        const  titulo = document.createElement("h3")
 
+        const  titulo = document.createElement("h3")
         titulo.textContent = "OP-" + op.numero+ " . " + op.produto
-        item.append(titulo)
-        lista.append(item)
-        
+
+        const pQtd = document.createElement("p")
+        pQtd.textContent = `Quantidade: ${op.quantidade} | Máquina: ${NOMES[op.maquina]}`
+
+        const pStatus = document.createElement("p")
+        pStatus.textContent = NOMES[op.status]
+
+        item.append(titulo, pQtd, pStatus)
+
         return item
     }
 
@@ -39,14 +45,22 @@ const NOMES = { aguardando: "Aguardando", producao: "Em produção", concluido: 
 
        lista.textContent = ""
 
+       let aguardando = 0, concluido = 0, producao = 0
+
        ordens.forEach((op) =>{
 
-       lista.append(criarOP(op)) 
+        if(op.status === "aguardando") {
+            aguardando++
+        } else if(op.status === "concluida") {
+            concluido++
+        } else {
+            producao++
+        }
 
-        op.status
-
-
+        lista.append(criarOP(op)) 
        })
+       
+       resumo.textContent = `Aguardando: ${aguardando} | Em produção: ${producao} | Concluídas: ${concluido}`   
     }
 
 
