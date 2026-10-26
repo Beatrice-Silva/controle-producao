@@ -12,13 +12,40 @@
 
         <h1>Ordens de Produção</h1>
         <button id="modo-tv">Modo TV</button>
-        <p id="resumo" class="resultado"></p>
+        
+        <form id="form-op">
+            <label for="produto">Produto:</label>
+            <input type="text" id="produto" name="produto">
+
+            <label for="quantidade">Quantidade:</label>
+            <input type="text" id="quantidade" name="quantidade">
+
+            <label for="maquina">Máquina:</label>
+            
+            <select name="maquina">
+                <option value="cnc">Torno CNC</option>
+                <option value="Prensa">Prensa</option>
+                <option value="Injetora">Injetora</option>
+                <option value="Solda">Solda</option>
+            </select>
+
+            <button type="submit">Abrir OP</button>
+
+            <p id="mensagem" class="erro" hidden></p>
+
+        </form>
       
-        <ul id="lista" class="lista-ops"> 
-          <button class="filtro selecionado" data-filtro="todas">Todas</button>
+        <div class="container">
+            <button class="filtro" data-filtro="todas">Abrir OP</button>
             <button class="filtro" data-filtro="aguardando">Aguardando</button>
             <button class="filtro" data-filtro="producao">Em Produção</button>
             <button class="filtro" data-filtro="concluido">Concluídas</button>
+        </div>
+
+        <p id="resumo" class="resultado"></p>
+
+        <ul id="lista" class="lista-ops"> 
+          
         </ul>
 
       </main>
@@ -26,4 +53,5 @@
     <script src="js/ordens.js"></script>
 
 </body>
+
 </html>
