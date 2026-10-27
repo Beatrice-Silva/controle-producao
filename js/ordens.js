@@ -3,6 +3,7 @@ const ops = document.querySelectorAll(".op")
 const resumo = document.querySelector("#resumo")
 const botaoTv = document.querySelector("#modo-tv")
 const formOp = document.querySelector("#form-op")
+
 let filtros = "todas"
 const botoesFiltro = document.querySelectorAll(".filtro")
 
@@ -63,7 +64,20 @@ let ordens = [
 
         lista.append(item)
 
+        if(op.status !== "concluida"){
+            const avancar = document.createElement("button")
+
+            if(op.status === "aguardando"){
+                avancar.textContent = "Iniciar produdao"
+            }else {
+                acancar.textContent = "Concluir"
+            }
+            item.append(avancar)
+        }
+
         return item
+
+
     }
 
 
@@ -120,7 +134,7 @@ function desenhar() {
     "Aguardando: " +
     aguardando +
     " - Em Produção: " +
-    producao 
+    producao  +
     " - Concluido: " +
     concluido;
 
@@ -134,19 +148,18 @@ function desenhar() {
 
     const produto = document.querySelector("#produto").ariaValueMax.trim()
     
-    const qtd = document.querySelector("#quantidade")
+    const qtd = Number(document.querySelector("#quantidade").value)
     
     const maquina = document.querySelector("#maquina")
 
     const mensagem = document.querySelector("#mensagem")
 
-    if( produto === ""  || qtd <= 0){
 
+    if( produto === ""  || !qtd || qtd <= 0){
         const texto = "Informe o produto e uma quantidade maior que zero"
-
         mensagem.hidden = false
-
         mensagem.textContent = texto
+        
     } else {
 
         mensagem.hidden = true
@@ -165,18 +178,21 @@ function desenhar() {
             maquina: maquina.value
         })
 
+        proximoNumero++
+
+        mensagem.hidden = true
+        formOp.reset()
+        campoProduto.focus()
+        desenhar()
+    
         
-
+        
     }
-
-    
-    
-    
 
     })
 
-
     desenhar()
+
 
 
 
