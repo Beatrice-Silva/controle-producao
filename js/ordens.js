@@ -3,6 +3,8 @@ const ops = document.querySelectorAll(".op")
 const resumo = document.querySelector("#resumo")
 const botaoTv = document.querySelector("#modo-tv")
 const formOp = document.querySelector("#form-op")
+const busca = document.querySelector("#busca")
+const vazia = document.querySelector("#vazia")
 
 let filtros = "todas"
 const botoesFiltro = document.querySelectorAll(".filtro")
@@ -46,7 +48,10 @@ let ordens = [
         aguardando: "Aguardando",
         producao: "Em produção",
         concluida: "Concluída"
+
+
     }
+
     
     const paraMostrar = filtros === "todas" ? ordens : 
     ordens.filter(op => op.status === filtros)
@@ -64,32 +69,63 @@ let ordens = [
 
         lista.append(item)
 
+        if(op.urgente = true){
+        
+            const urgente = document.textContent("scan")
+
+        }
+
         if(op.status !== "concluida"){
             const avancar = document.createElement("button")
 
             if(op.status === "aguardando"){
                 avancar.textContent = "Iniciar produdao"
+
             }else {
-                acancar.textContent = "Concluir"
+                avancar.textContent = "Concluir"
             }
+
             item.append(avancar)
+        }
+
+        
+        
+
+        if(op.status === "aguardando"){
+            const cancelar = document.createElement("button")
+            cancelar.textContent = "cancelar"
+
+                cancellar.addEventListener("click", () => {
+                    if(confirm("Cancelar a OP-" + op.numero + "?")){
+                        ordens = ordens.filter((o) !== op)
+                        desenhar()
+                    }
+                })
+
+            item.append(cancelar)
         }
 
         return item
 
-
     }
 
+    avancar.addEventListener("click", () =>{
+        if(op.status === "aguardando"){
+            op.status = "aguardando"
+        }else{
+            op.status = "Concluida"
+        }
+        desenhar() 
+
+    })
 
 
 function desenhar() {
   
   lista.textContent = "";
-  
+
   aguardando = 0;
-  
   concluido = 0;
-  
   producao = 0;
   
   ordensSelecionadas =
@@ -99,36 +135,48 @@ function desenhar() {
       ? ordens
       
       : ordens.filter((ordem) => ordem.status === filtros);
-  
-  console.log(ordensSelecionadas);
+
+
+
+    const texto = busca.value.trim().toLowerCase()
+    visiveis = visiveis.filter((op) => 
+        op.produto.toLowerCase().includes(texto))
+
+
+  console.log(ordensSelecionadas)
   
   ordensSelecionadas.forEach((op) => {
+    
+    criarOP(op);
+
+    if(op.urgente = true){
+        urgente++
+    }
+})
+
+
+  ordensSelecionadas.forEach((op) => { 
   
     criarOP(op);
-  
+
+    
+   
     if (op.status === "aguardando") {
-  
-      aguardando++;
-  
+      aguardando++
     }
-  
     if (op.status === "concluida") {
-  
-      concluido++;
-  
+      concluido++
     }
   
     if (op.status === "producao") {
-  
-      producao++;
-  
+      producao++
     }
   
-  });
+  })
 
-  
-  const texto =
-  
+
+
+
     "Mostrando "+ordensSelecionadas.length+
     " de "+ordens.length+ " ordens no painel\n" +
     "Aguardando: " +
@@ -138,20 +186,17 @@ function desenhar() {
     " - Concluido: " +
     concluido;
 
-  
-  resumo.textContent = texto;
+    vazia.hidden = visiveis.length > 0
+    resumo(visiveis.length)
 
 }
 
-    formOp.addEventListener("submit", (event) => {
-    event.preventDefault();
+    formOp.addEventListener("submit", (event) =>  {
+    event.preventDefault()
 
     const produto = document.querySelector("#produto").ariaValueMax.trim()
-    
     const qtd = Number(document.querySelector("#quantidade").value)
-    
     const maquina = document.querySelector("#maquina")
-
     const mensagem = document.querySelector("#mensagem")
 
 
@@ -168,6 +213,7 @@ function desenhar() {
 
         ordens.push({
 
+
             numero : ordens[ordens.length-1].numero + 1,
 
             produto,
@@ -175,7 +221,9 @@ function desenhar() {
 
             status: "aguardando",
 
-            maquina: maquina.value
+            maquina: maquina.value,
+
+            urgente:campoUrgente.checked
         })
 
         proximoNumero++
@@ -184,14 +232,12 @@ function desenhar() {
         formOp.reset()
         campoProduto.focus()
         desenhar()
-    
-        
-        
     }
 
     })
 
-    desenhar()
+    desenhar() 
+    busca.addEventListener("input", desenhar)
 
 
 

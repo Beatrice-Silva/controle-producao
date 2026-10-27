@@ -13,6 +13,8 @@
         <h1>Ordens de Produção</h1>
         <button id="modo-tv">Modo TV</button>
         
+        
+
         <form id="form-op">
             <label for="produto">Produto:</label>
             <input type="text" id="produto" name="produto">
@@ -23,7 +25,9 @@
             <label for="maquina">Máquina:</label>
             
             <select id="maquina" name="maquina">
-                <option value="Torno CNC">Torno CNC</option>
+                <option value="Torno CNC">Torno 
+                    <label>
+                    <input id="urgente"></label>CNC</option>
                 <option value="Prensa">Prensa</option>
                 <option value="Injetora">Injetora</option>
                 <option value="Solda">Solda</option>
@@ -34,6 +38,17 @@
             <p id="mensagem" class="erro" hidden></p>
 
         </form>
+
+        <span>urgente</span>
+
+        <label for="busca">Buscar produto</label>
+        <input id="busca" type ="search">
+
+        <p id="vazia" hidden>Nenhuma ordem encontrada.</p>
+
+        <label>
+            <input id="urgente" type="checkbox">Urgente
+        </label>
       
         <div class="container">
             <button class="filtro" data-filtro="todas">Todas</button>

@@ -86,12 +86,25 @@
     white-space: pre-line;   /* aula 8: o \n vira quebra de linha */
   }
   
-  .ok     { border-color: #2E7D32; background: #E8F5E9; }
-  .alerta { border-color: #F9A825; background: #FFF8E1; }
-  .erro   { border-color: #C62828; background: #FFEBEE; }
+  .ok     { 
+    border-color: #16b123; 
+    background: #b2c4df; 
+  }
+
+  .alerta { 
+    border-color: #d5ebad; 
+    background: #FFF8E1; 
+  }
+  
+  .erro   { border-color: #fa5858; 
+    background: #5a52b9; }
+
+  .scan{
+     border-color: #cc0303; 
+     background: #190138; }
 
 
-  /* ===== 6. Painel de Ordens de Produção ===== */
+ 
 .painel {
      max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem; 
     }
@@ -101,8 +114,10 @@
     }
     
 .op {
-margin-top: 1rem;
-padding: 1rem;
+
+  margin-top: 1rem;
+
+  padding: 1rem;
 border: 1px solid var(--cor-borda);
 border-left: 8px solid var(--cor-borda);
 border-radius: 8px;
