@@ -1,13 +1,17 @@
-const ops = document.querySelectorAll(".op")
-
+const lista = document.querySelector("#lista")
 const resumo = document.querySelector("#resumo")
-const botaoTv = document.querySelector("#modo-tv")
-const formOp = document.querySelector("#form-op")
+const form = document.querySelector("#form-op")
+const campoProduto = document.querySelector("#produto")
+const campoQuantidade = document.querySelector("#quantidade")
+const campoMaquina = document.querySelector("#maquina")
+const campoUrgente = document.querySelector("#urgente")
+const mensagem = document.querySelector("#mensagem")
 const busca = document.querySelector("#busca")
 const vazia = document.querySelector("#vazia")
 
 let filtros = "todas"
 const botoesFiltro = document.querySelectorAll(".filtro")
+let proximoNumero = 105
 
 let aguardando = 0, 
 producao = 0, 
@@ -67,7 +71,7 @@ let ordens = [
 
         item.append(titulo)
 
-        lista.append(item)
+
 
         if(op.urgente = true){
         
@@ -75,35 +79,34 @@ let ordens = [
 
         }
 
-        if(op.status !== "concluida"){
-            const avancar = document.createElement("button")
+       if(op.status !== "concluida"){
+    const avancar = document.createElement("button")
+    avancar.textContent = op.status === "aguardando" ? "Iniciar produção" : "Concluir"
+    avancar.addEventListener("click", () => {
+      if(op.status === "aguardando"){
+        op.status = "producao"
+      } else {
+        op.status = "concluida"
+      }
+      desenhar()
+    })
+    item.append(avancar)
+  }
 
-            if(op.status === "aguardando"){
-                avancar.textContent = "Iniciar produdao"
 
-            }else {
-                avancar.textContent = "Concluir"
-            }
+  
+  if(op.status === "aguardando"){
+    const cancelar = document.createElement("button")
+    cancelar.textContent = "Cancelar"
+    cancelar.addEventListener("click", () => {
+      if(confirm("Cancelar a OP-" + op.numero + "?")){
+        ordens = ordens.filter((o) => o !== op)
+        desenhar()
+      }
+    })
+    item.append(cancelar)
+  }
 
-            item.append(avancar)
-        }
-
-        
-        
-
-        if(op.status === "aguardando"){
-            const cancelar = document.createElement("button")
-            cancelar.textContent = "cancelar"
-
-                cancellar.addEventListener("click", () => {
-                    if(confirm("Cancelar a OP-" + op.numero + "?")){
-                        ordens = ordens.filter((o) !== op)
-                        desenhar()
-                    }
-                })
-
-            item.append(cancelar)
-        }
 
         return item
 
@@ -236,8 +239,17 @@ function desenhar() {
 
     })
 
+    botoesFiltro.forEach(botao => {
+  botao.addEventListener("click", () => {
+    filtro = botao.dataset.filtro
+    desenhar()
+  })
+})
+
+
+ busca.addEventListener("input", desenhar)
     desenhar() 
-    busca.addEventListener("input", desenhar)
+   
 
 
 
